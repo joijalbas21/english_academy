@@ -3,6 +3,7 @@ module com.englishacademy {
     requires javafx.fxml;
     requires java.sql;
 
-    opens com.englishacademy.views to javafx.fxml;
+    opens com.englishacademy to javafx.fxml;
+    opens com.englishacademy.controllers to javafx.fxml;
     exports com.englishacademy;
 }
