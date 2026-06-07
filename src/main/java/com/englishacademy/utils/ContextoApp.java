@@ -10,6 +10,7 @@ package com.englishacademy.utils;
  */
 public class ContextoApp {
     private static Integer idAlumnoEnEdicion;
+    private static Integer idProfesorEnEdicion;
 
     public static Integer getIdAlumnoEnEdicion() {
         return idAlumnoEnEdicion;
@@ -19,7 +20,16 @@ public class ContextoApp {
         idAlumnoEnEdicion = id;
     }
 
+    public static Integer getIdProfesorEnEdicion() {
+        return idProfesorEnEdicion;
+    }
+
+    public static void setIdProfesorEnEdicion(Integer id) {
+        idProfesorEnEdicion = id;
+    }
+
     public static void limpiar() {
         idAlumnoEnEdicion = null;
+        idProfesorEnEdicion = null;
     }
 }

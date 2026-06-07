@@ -1,11 +1,11 @@
 package com.englishacademy.models;
 
 public class Profesor {
-    public int idProfesor;
-    public String nombre;
-    public String apellido;
-    public int dni;
-    public String email;
+    private int idProfesor;
+    private String nombre;
+    private String apellido;
+    private int dni;
+    private String email;
 
     public Profesor() {
     }
@@ -56,16 +56,5 @@ public class Profesor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Profesor{" +
-                "idProfesor=" + idProfesor +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni=" + dni +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

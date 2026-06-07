@@ -62,7 +62,7 @@ public class MenuViewController {
 			case "dashboard" -> "/com/englishacademy/views/dashboard-view.fxml";
 			case "alumnos" -> "/com/englishacademy/views/alumnos/alumno-view.fxml";
 			case "cursos" -> "/com/englishacademy/views/curso-view.fxml";
-			case "profesores" -> "/com/englishacademy/views/profesor-view.fxml";
+			case "profesores" -> "/com/englishacademy/views/profesores/profesor-view.fxml";
 			case "aulas" -> "/com/englishacademy/views/aula-view.fxml";
 			default -> null;
 		};
