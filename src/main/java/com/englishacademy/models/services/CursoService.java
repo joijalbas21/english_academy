@@ -37,8 +37,8 @@ public class CursoService {
     }
 
     private void inicializarConDatos() {
-        cursos.add(new Curso(1, "English Basics", "Beginner", "Curso introductorio de inglés", 1, null, null, null));
-        cursos.add(new Curso(2, "Intermediate English", "Intermediate", "Curso de nivel intermedio", 1, null, null, null));
+        cursos.add(new Curso(1, "English Basics", "Beginner", "Curso introductorio de inglés", 1, null, null, null, 0));
+        cursos.add(new Curso(2, "Intermediate English", "Intermediate", "Curso de nivel intermedio", 1, null, null, null, 0));
     }
 
     /**
@@ -74,6 +74,7 @@ public class CursoService {
             c.setDiaInicio(curso.getDiaInicio());
             c.setHoraInicio(curso.getHoraInicio());
             c.setHoraFin(curso.getHoraFin());
+            c.setIdAula(curso.getIdAula());
         } else {
             throw new IllegalArgumentException("Curso no encontrado");
         }
@@ -112,29 +113,7 @@ public class CursoService {
 
     public void validarCurso(Curso curso) {
         ValidacionesHelper.validarNombre(curso.getNombre(), "El nombre");
-        validarNivel(curso.getNivel());
         validarDescripcion(curso.getDescripcion());
-    }
-
-    /**
-     * Valida el nivel del curso.
-     *
-     * Parámetro correcto: 3-30 caracteres, letras, números y espacios.
-     * Ej: "Beginner", "Intermediate", "Advanced", "Level 1"
-     *
-     * @param nivel el nivel a validar
-     * @throws IllegalArgumentException si el nivel no es válido
-     */
-    private void validarNivel(String nivel) {
-        if (nivel == null || nivel.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nivel es incorrecto.");
-        }
-        if (nivel.length() < 3 || nivel.length() > 30) {
-            throw new IllegalArgumentException("El nivel es incorrecto.");
-        }
-        if (!nivel.matches("[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ\\s]+")) {
-            throw new IllegalArgumentException("El nivel es incorrecto.");
-        }
     }
 
     /**
