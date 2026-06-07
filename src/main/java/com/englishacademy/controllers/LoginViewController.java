@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.englishacademy.utils.AlertUtil;
+import com.englishacademy.utils.SceneUtil;
 import com.englishacademy.models.services.LoginService;
 
 public class LoginViewController {
@@ -16,6 +17,17 @@ public class LoginViewController {
 
 	private final LoginService loginService = new LoginService();
 
+	/**
+	 * Permite presionar Enter en el campo password para ejecutar el login.
+	 */
+	@FXML
+	public void initialize() {
+		passwordField.setOnAction(e -> handleLogin());
+	}
+
+	/**
+	 * Valida email y contraseña, luego autentica con el servicio de login.
+	 */
 	@FXML
 	private void handleLogin() {
 		String email = emailField.getText().trim();
@@ -33,11 +45,18 @@ public class LoginViewController {
 
 		boolean loginExitoso = loginService.autenticar(email, password);
 		if (loginExitoso) {
-			AlertUtil.showInfo("Éxito", "Bienvenido " + email);
+			navigateToDashboard();
 		} else {
 			AlertUtil.showError("Error", "Email o contraseña incorrectos");
 		}
 
 		passwordField.clear();
+	}
+
+	/**
+	 * Carga la vista del dashboard y cambia la escena actual.
+	 */
+	private void navigateToDashboard() {
+		SceneUtil.cambiarEscena("/com/englishacademy/views/dashboard-view.fxml", emailField);
 	}
 }

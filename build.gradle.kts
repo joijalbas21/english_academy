@@ -25,6 +25,13 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
+tasks.processResources {
+    from("src/main/java/com/englishacademy/views") {
+        include("**/*.fxml")
+        into("com/englishacademy/views")
+    }
+}
+
 application {
     mainModule.set("com.englishacademy")
     mainClass.set("com.englishacademy.Main")
