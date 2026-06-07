@@ -13,7 +13,7 @@ INSERT INTO Alumnos (
 VALUES (
     'Joaquin',
     'Ijalba',
-    35706793
+    35706793,
     'joaquinijalba@gmail.com',
     '3434045828'
 );
@@ -57,7 +57,7 @@ INSERT INTO CicloLectivos (
 VALUES (
     '2026-03-01',
     '2026-12-15',
-    'ACTVO'
+    'ACTIVO'
 );
 
 -- =========================
@@ -99,5 +99,5 @@ VALUES (
     1,
     1,
     CURRENT_DATE,
-    'ACTVO'
+    'ACTIVO'
 );
