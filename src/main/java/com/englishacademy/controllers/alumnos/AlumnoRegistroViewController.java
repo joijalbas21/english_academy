@@ -100,6 +100,17 @@ public class AlumnoRegistroViewController {
     }
 
     @FXML
+    private void handleInscribirCursos() {
+        if (idEnEdicion == null) {
+            AlertUtil.showError("Error", "Guarda el alumno primero para inscribirse en cursos.");
+            return;
+        }
+
+        ContextoApp.setIdAlumnoEnEdicion(idEnEdicion);
+        SceneUtil.abrirPopup("/com/englishacademy/views/alumnos/alumno-cursos-view.fxml", "Inscribir Cursos");
+    }
+
+    @FXML
     private void handleCancelar() {
         volverAAlumnos();
     }
