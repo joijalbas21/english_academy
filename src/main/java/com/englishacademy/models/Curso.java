@@ -11,12 +11,13 @@ public class Curso {
     private String diaInicio;
     private Time horaInicio;
     private Time horaFin;
+    private int idAula;
 
     public Curso() {
     }
 
     public Curso(int idCurso, String nombre, String nivel, String descripcion, int idCicloLectivo,
-                 String diaInicio, Time horaInicio, Time horaFin) {
+                 String diaInicio, Time horaInicio, Time horaFin, int idAula) {
         this.idCurso = idCurso;
         this.nombre = nombre;
         this.nivel = nivel;
@@ -25,6 +26,7 @@ public class Curso {
         this.diaInicio = diaInicio;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.idAula = idAula;
     }
 
     public int getIdCurso() {
@@ -89,5 +91,13 @@ public class Curso {
 
     public void setHoraFin(Time horaFin) {
         this.horaFin = horaFin;
+    }
+
+    public int getIdAula() {
+        return idAula;
+    }
+
+    public void setIdAula(int idAula) {
+        this.idAula = idAula;
     }
 }

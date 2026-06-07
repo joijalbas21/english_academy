@@ -46,8 +46,11 @@
                 <Label text="Hora Fin (HH:mm):" style="-fx-text-fill: #ffffff;" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                 <TextField fx:id="horaFinField" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="15:30" />
 
-                <Label text="Descripción:" style="-fx-text-fill: #ffffff;" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                <TextArea fx:id="descripcionField" wrapText="true" prefRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label text="Aula:" style="-fx-text-fill: #ffffff;" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                <ComboBox fx:id="aulaCombo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                <Label text="Descripción:" style="-fx-text-fill: #ffffff;" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                <TextArea fx:id="descripcionField" wrapText="true" prefRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             </GridPane>
 
             <Label fx:id="errorLabel" style="-fx-text-fill: #ff6b6b; -fx-font-weight: bold;" />

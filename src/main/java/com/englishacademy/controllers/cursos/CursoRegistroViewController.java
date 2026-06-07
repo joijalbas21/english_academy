@@ -7,8 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import java.sql.Time;
+import com.englishacademy.models.Aula;
 import com.englishacademy.models.CicloLectivo;
 import com.englishacademy.models.Curso;
+import com.englishacademy.models.services.AulaService;
 import com.englishacademy.models.services.CicloLectivoService;
 import com.englishacademy.models.services.CursoService;
 import com.englishacademy.utils.AlertUtil;
@@ -42,20 +44,26 @@ public class CursoRegistroViewController {
     private ComboBox<CicloLectivo> cicloCombo;
 
     @FXML
+    private ComboBox<Aula> aulaCombo;
+
+    @FXML
     private Label errorLabel;
 
     private CursoService cursoService;
     private CicloLectivoService cicloService;
+    private AulaService aulaService;
     private Integer idEnEdicion;
 
     @FXML
     public void initialize() {
         cursoService = CursoService.getInstance();
         cicloService = CicloLectivoService.getInstance();
+        aulaService = AulaService.getInstance();
         idEnEdicion = ContextoApp.getIdCursoEnEdicion();
 
         cargarNiveles();
         cargarDias();
+        cargarAulas();
         cargarCiclos();
 
         if (idEnEdicion != null) {
@@ -83,6 +91,13 @@ public class CursoRegistroViewController {
         diaCombo.getSelectionModel().selectFirst();
     }
 
+    private void cargarAulas() {
+        aulaCombo.setItems(FXCollections.observableArrayList(aulaService.obtenerTodos()));
+        if (!aulaCombo.getItems().isEmpty()) {
+            aulaCombo.getSelectionModel().selectFirst();
+        }
+    }
+
     private void cargarDatos() {
         Curso curso = cursoService.obtener(idEnEdicion);
         if (curso != null) {
@@ -101,6 +116,12 @@ public class CursoRegistroViewController {
             CicloLectivo ciclo = cicloService.obtener(curso.getIdCicloLectivo());
             if (ciclo != null) {
                 cicloCombo.getSelectionModel().select(ciclo);
+            }
+            if (curso.getIdAula() > 0) {
+                Aula aula = aulaService.obtener(curso.getIdAula());
+                if (aula != null) {
+                    aulaCombo.getSelectionModel().select(aula);
+                }
             }
         }
     }
@@ -123,7 +144,16 @@ public class CursoRegistroViewController {
             curso.setNombre(nombreField.getText().trim());
             curso.setNivel(nivelCombo.getSelectionModel().getSelectedItem());
             curso.setDiaInicio(diaCombo.getSelectionModel().getSelectedItem());
-            if (!horaInicioField.getText().trim().isEmpty()) {
+
+            boolean horaInicioLleno = !horaInicioField.getText().trim().isEmpty();
+            boolean horaFinLleno = !horaFinField.getText().trim().isEmpty();
+
+            if (horaInicioLleno != horaFinLleno) {
+                errorLabel.setText("Debes completar ambas horas o dejar ambas vacías.");
+                return;
+            }
+
+            if (horaInicioLleno) {
                 try {
                     curso.setHoraInicio(Time.valueOf(horaInicioField.getText().trim() + ":00"));
                 } catch (IllegalArgumentException e) {
@@ -131,7 +161,7 @@ public class CursoRegistroViewController {
                     return;
                 }
             }
-            if (!horaFinField.getText().trim().isEmpty()) {
+            if (horaFinLleno) {
                 try {
                     curso.setHoraFin(Time.valueOf(horaFinField.getText().trim() + ":00"));
                 } catch (IllegalArgumentException e) {
@@ -141,6 +171,21 @@ public class CursoRegistroViewController {
             }
             curso.setDescripcion(descripcionField.getText().trim());
             curso.setIdCicloLectivo(cicloCombo.getSelectionModel().getSelectedItem().getIdCicloLectivo());
+
+            if (aulaCombo.getSelectionModel().getSelectedItem() != null) {
+                Aula aulaSeleccionada = aulaCombo.getSelectionModel().getSelectedItem();
+                curso.setIdAula(aulaSeleccionada.getIdAula());
+
+                // Validar disponibilidad (CU013)
+                if (curso.getHoraInicio() != null && curso.getHoraFin() != null && curso.getDiaInicio() != null) {
+                    int idCursoExcluir = idEnEdicion != null ? idEnEdicion : -1;
+                    if (!aulaService.validarDisponibilidad(aulaSeleccionada.getIdAula(), curso.getDiaInicio(),
+                                                           curso.getHoraInicio(), curso.getHoraFin(), idCursoExcluir)) {
+                        errorLabel.setText("El aula ya está ocupada en ese horario.");
+                        return;
+                    }
+                }
+            }
 
             if (idEnEdicion != null) {
                 cursoService.modificar(curso);

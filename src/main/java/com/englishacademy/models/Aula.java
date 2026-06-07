@@ -40,10 +40,6 @@ public class Aula {
 
     @Override
     public String toString() {
-        return "Aula{" +
-                "idAula=" + idAula +
-                ", nombre='" + nombre + '\'' +
-                ", capacidad=" + capacidad +
-                '}';
+        return nombre + " - Cap: " + capacidad;
     }
 }
