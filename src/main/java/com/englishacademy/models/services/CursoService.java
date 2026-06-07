@@ -37,8 +37,8 @@ public class CursoService {
     }
 
     private void inicializarConDatos() {
-        cursos.add(new Curso(1, "English Basics", "Beginner", "Curso introductorio de inglés", 1, null, null, null, 0));
-        cursos.add(new Curso(2, "Intermediate English", "Intermediate", "Curso de nivel intermedio", 1, null, null, null, 0));
+        cursos.add(new Curso(1, "English Basics", "Beginner", "Curso introductorio de inglés", 1, null, null, null, 0, 0));
+        cursos.add(new Curso(2, "Intermediate English", "Intermediate", "Curso de nivel intermedio", 1, null, null, null, 0, 0));
     }
 
     /**
@@ -75,6 +75,7 @@ public class CursoService {
             c.setHoraInicio(curso.getHoraInicio());
             c.setHoraFin(curso.getHoraFin());
             c.setIdAula(curso.getIdAula());
+            c.setIdProfesor(curso.getIdProfesor());
         } else {
             throw new IllegalArgumentException("Curso no encontrado");
         }

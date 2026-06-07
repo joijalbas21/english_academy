@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.englishacademy.controllers.profesores.ProfesorCursosViewController"
+            style="-fx-background-color: #0f1419;">
+
+    <center>
+        <VBox style="-fx-padding: 20;" spacing="15">
+            <Label text="Selecciona los cursos para este profesor"
+                   style="-fx-font-size: 16; -fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+
+            <ListView fx:id="cursosListView" style="-fx-background-color: #1a1f27;" VBox.vgrow="ALWAYS" />
+
+            <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+                <Button text="Guardar" onAction="#handleGuardar" fx:id="guardarButton"
+                        style="-fx-padding: 10 30; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand;" />
+                <Button text="Cancelar" onAction="#handleCancelar"
+                        style="-fx-padding: 10 30; -fx-background-color: #666666; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-cursor: hand;" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

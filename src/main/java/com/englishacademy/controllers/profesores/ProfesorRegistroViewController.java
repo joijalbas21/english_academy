@@ -94,6 +94,17 @@ public class ProfesorRegistroViewController {
     }
 
     @FXML
+    private void handleAsignarCursos() {
+        if (idEnEdicion == null) {
+            AlertUtil.showError("Error", "Guarda el profesor primero para asignar cursos.");
+            return;
+        }
+
+        ContextoApp.setIdProfesorEnEdicion(idEnEdicion);
+        SceneUtil.abrirPopup("/com/englishacademy/views/profesores/profesor-cursos-view.fxml", "Asignar Cursos");
+    }
+
+    @FXML
     private void handleCancelar() {
         volverAProfesores();
     }
