@@ -1,20 +1,25 @@
 package com.englishacademy.models;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class CicloLectivo {
-    public int idCicloLectivo;
-    public int anio;
-    public Date fechaInicio;
-    public String estado;
+    private int idCicloLectivo;
+    private int anio;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private String diaInicio;
+    private String estado;
 
     public CicloLectivo() {
     }
 
-    public CicloLectivo(int idCicloLectivo, int anio, Date fechaInicio, String estado) {
+    public CicloLectivo(int idCicloLectivo, int anio, Date fechaInicio, Date fechaFin, String diaInicio, String estado) {
         this.idCicloLectivo = idCicloLectivo;
         this.anio = anio;
         this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.diaInicio = diaInicio;
         this.estado = estado;
     }
 
@@ -42,6 +47,22 @@ public class CicloLectivo {
         this.fechaInicio = fechaInicio;
     }
 
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public String getDiaInicio() {
+        return diaInicio;
+    }
+
+    public void setDiaInicio(String diaInicio) {
+        this.diaInicio = diaInicio;
+    }
+
     public String getEstado() {
         return estado;
     }
@@ -52,11 +73,9 @@ public class CicloLectivo {
 
     @Override
     public String toString() {
-        return "CicloLectivo{" +
-                "idCicloLectivo=" + idCicloLectivo +
-                ", anio=" + anio +
-                ", fechaInicio=" + fechaInicio +
-                ", estado='" + estado + '\'' +
-                '}';
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String inicio = fechaInicio != null ? sdf.format(fechaInicio) : "N/A";
+        String fin = fechaFin != null ? sdf.format(fechaFin) : "N/A";
+        return inicio + " - " + fin + " - " + estado;
     }
 }

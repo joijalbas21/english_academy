@@ -1,25 +1,27 @@
 package com.englishacademy.models;
 
-import java.sql.Timestamp;
+import java.sql.Time;
 
 public class Curso {
-    public int idCurso;
-    public String nombre;
-    public String nivel;
-    public String descripcion;
-    public String diaInicio;
-    public Timestamp horaInicio;
-    public Timestamp horaFin;
+    private int idCurso;
+    private String nombre;
+    private String nivel;
+    private String descripcion;
+    private int idCicloLectivo;
+    private String diaInicio;
+    private Time horaInicio;
+    private Time horaFin;
 
     public Curso() {
     }
 
-    public Curso(int idCurso, String nombre, String nivel, String descripcion, String diaInicio,
-                 Timestamp horaInicio, Timestamp horaFin) {
+    public Curso(int idCurso, String nombre, String nivel, String descripcion, int idCicloLectivo,
+                 String diaInicio, Time horaInicio, Time horaFin) {
         this.idCurso = idCurso;
         this.nombre = nombre;
         this.nivel = nivel;
         this.descripcion = descripcion;
+        this.idCicloLectivo = idCicloLectivo;
         this.diaInicio = diaInicio;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
@@ -57,6 +59,14 @@ public class Curso {
         this.descripcion = descripcion;
     }
 
+    public int getIdCicloLectivo() {
+        return idCicloLectivo;
+    }
+
+    public void setIdCicloLectivo(int idCicloLectivo) {
+        this.idCicloLectivo = idCicloLectivo;
+    }
+
     public String getDiaInicio() {
         return diaInicio;
     }
@@ -65,32 +75,19 @@ public class Curso {
         this.diaInicio = diaInicio;
     }
 
-    public Timestamp getHoraInicio() {
+    public Time getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Timestamp horaInicio) {
+    public void setHoraInicio(Time horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Timestamp getHoraFin() {
+    public Time getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Timestamp horaFin) {
+    public void setHoraFin(Time horaFin) {
         this.horaFin = horaFin;
-    }
-
-    @Override
-    public String toString() {
-        return "Curso{" +
-                "idCurso=" + idCurso +
-                ", nombre='" + nombre + '\'' +
-                ", nivel='" + nivel + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", diaInicio='" + diaInicio + '\'' +
-                ", horaInicio=" + horaInicio +
-                ", horaFin=" + horaFin +
-                '}';
     }
 }

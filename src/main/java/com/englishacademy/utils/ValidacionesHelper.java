@@ -25,6 +25,28 @@ public class ValidacionesHelper {
     }
 
     /**
+     * Valida el nombre de una entidad.
+     *
+     * Parámetro correcto: 3-20 caracteres, alfanúmerico y espacios.
+     * Ej: "Inglés 1", "Principiantes", "Anual"
+     *
+     * @param nombre el nombre a validar
+     * @param campo etiqueta del campo (ej: "El nombre", "El titulo")
+     * @throws IllegalArgumentException si el nombre no es válido
+     */
+    public static void validarNombre(String nombre, String campo) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException(campo + " es incorrecto.");
+        }
+        if (nombre.length() < 3 || nombre.length() > 20) {
+            throw new IllegalArgumentException(campo + " es incorrecto.");
+        }
+        if (!nombre.matches("[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ\\s]+")) {
+            throw new IllegalArgumentException(campo + " es incorrecto.");
+        }
+    }
+
+    /**
      * Valida el DNI (Documento Nacional de Identidad).
      *
      * Parámetro correcto: número entero entre 1 y 99.999.999.
