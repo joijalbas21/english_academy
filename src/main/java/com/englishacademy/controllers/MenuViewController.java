@@ -2,13 +2,9 @@ package com.englishacademy.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import com.englishacademy.utils.AlertUtil;
-import java.io.IOException;
+import com.englishacademy.utils.SceneUtil;
 
 public class MenuViewController {
 
@@ -62,24 +58,17 @@ public class MenuViewController {
 	 * @param btn el botón que disparó la navegación
 	 */
 	private void navigateTo(String pageName, Button btn) {
-		try {
-			String fxmlFile = switch(pageName) {
-				case "dashboard" -> "/com/englishacademy/views/dashboard-view.fxml";
-				case "alumnos" -> "/com/englishacademy/views/alumno-view.fxml";
-				case "cursos" -> "/com/englishacademy/views/curso-view.fxml";
-				case "profesores" -> "/com/englishacademy/views/profesor-view.fxml";
-				case "aulas" -> "/com/englishacademy/views/aula-view.fxml";
-				default -> null;
-			};
+		String fxmlFile = switch(pageName) {
+			case "dashboard" -> "/com/englishacademy/views/dashboard-view.fxml";
+			case "alumnos" -> "/com/englishacademy/views/alumno-view.fxml";
+			case "cursos" -> "/com/englishacademy/views/curso-view.fxml";
+			case "profesores" -> "/com/englishacademy/views/profesor-view.fxml";
+			case "aulas" -> "/com/englishacademy/views/aula-view.fxml";
+			default -> null;
+		};
 
-			if (fxmlFile != null) {
-				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-				Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
-				Stage stage = (Stage) btn.getScene().getWindow();
-				stage.setScene(scene);
-			}
-		} catch (IOException e) {
-			AlertUtil.showError("Error", "No se pudo cargar la página: " + pageName);
+		if (fxmlFile != null) {
+			SceneUtil.cambiarEscena(fxmlFile, btn);
 		}
 	}
 }

@@ -1,14 +1,11 @@
 package com.englishacademy.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import com.englishacademy.utils.AlertUtil;
+import com.englishacademy.utils.SceneUtil;
 import com.englishacademy.models.services.LoginService;
-import java.io.IOException;
 
 public class LoginViewController {
 
@@ -60,14 +57,6 @@ public class LoginViewController {
 	 * Carga la vista del dashboard y cambia la escena actual.
 	 */
 	private void navigateToDashboard() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/englishacademy/views/dashboard-view.fxml"));
-			Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
-			Stage stage = (Stage) emailField.getScene().getWindow();
-			stage.setScene(scene);
-			stage.setResizable(false);
-		} catch (IOException e) {
-			AlertUtil.showError("Error", "No se pudo cargar el dashboard");
-		}
+		SceneUtil.cambiarEscena("/com/englishacademy/views/dashboard-view.fxml", emailField);
 	}
 }
