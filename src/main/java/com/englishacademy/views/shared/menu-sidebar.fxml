@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="root" style="-fx-background-color: #1a1f27; -fx-padding: 20 0 20 0;" minWidth="180"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.englishacademy.controllers.MenuViewController">
+
+    <VBox style="-fx-padding: 0 20;" spacing="15">
+        <ImageView fitHeight="60" fitWidth="160" preserveRatio="true">
+            <image>
+                <Image url="file:./src/main/resources/assets/logo-dark.png" />
+            </image>
+        </ImageView>
+
+    </VBox>
+
+    <Region minHeight="40" style="-fx-background-color: transparent;" />
+
+    <!-- Menu Items -->
+    <Button text="Dashboard" userData="dashboard" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand;"
+            onAction="#handle" />
+    <Button text="Alumnos" userData="alumnos" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 1 0 1 0; -fx-cursor: hand;"
+            onAction="#handle" />
+    <Button text="Cursos" userData="cursos" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
+            onAction="#handle" />
+    <Button text="Profesores" userData="profesores" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
+            onAction="#handle" />
+    <Button text="Aulas" userData="aulas" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
+            onAction="#handle" />
+</VBox>
