@@ -60,7 +60,7 @@ public class MenuViewController {
 	private void navigateTo(String pageName, Button btn) {
 		String fxmlFile = switch(pageName) {
 			case "dashboard" -> "/com/englishacademy/views/dashboard-view.fxml";
-			case "alumnos" -> "/com/englishacademy/views/alumno-view.fxml";
+			case "alumnos" -> "/com/englishacademy/views/alumnos/alumno-view.fxml";
 			case "cursos" -> "/com/englishacademy/views/curso-view.fxml";
 			case "profesores" -> "/com/englishacademy/views/profesor-view.fxml";
 			case "aulas" -> "/com/englishacademy/views/aula-view.fxml";

@@ -5,6 +5,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.englishacademy.utils.AlertUtil;
 import com.englishacademy.utils.SceneUtil;
+import com.englishacademy.utils.ValidacionesHelper;
 import com.englishacademy.models.services.LoginService;
 
 public class LoginViewController {
@@ -38,8 +39,10 @@ public class LoginViewController {
 			return;
 		}
 
-		if (!email.contains("@")) {
-			AlertUtil.showWarning("Validación", "Ingresa un email válido");
+		try {
+			ValidacionesHelper.validarEmail(email);
+		} catch (IllegalArgumentException e) {
+			AlertUtil.showWarning("Validación", e.getMessage());
 			return;
 		}
 

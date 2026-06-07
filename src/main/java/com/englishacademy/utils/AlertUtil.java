@@ -1,6 +1,8 @@
 package com.englishacademy.utils;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.util.Optional;
 
 public class AlertUtil {
 
@@ -22,5 +24,14 @@ public class AlertUtil {
 
 	public static void showError(String title, String message) {
 		showAlert(title, message, Alert.AlertType.ERROR);
+	}
+
+	public static boolean showConfirmation(String title, String message) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		Optional<ButtonType> result = alert.showAndWait();
+		return result.isPresent() && result.get() == ButtonType.OK;
 	}
 }

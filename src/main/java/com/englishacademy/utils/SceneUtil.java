@@ -21,11 +21,18 @@ public class SceneUtil {
 	public static void cambiarEscena(String fxmlPath, Control control, int width, int height) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(SceneUtil.class.getResource(fxmlPath));
+			if (fxmlLoader.getLocation() == null) {
+				AlertUtil.showError("Error", "La página solicitada no existe. Intenta de nuevo.");
+				System.err.println("[ERROR] FXML no encontrado: " + fxmlPath);
+				return;
+			}
 			Scene scene = new Scene(fxmlLoader.load(), width, height);
 			Stage stage = (Stage) control.getScene().getWindow();
 			stage.setScene(scene);
 		} catch (Exception e) {
-			AlertUtil.showError("Error", "No se pudo cargar la vista: " + fxmlPath);
+			System.err.println("[ERROR] Error al cargar FXML " + fxmlPath + ": " + e.getMessage());
+			e.printStackTrace();
+			AlertUtil.showError("Error", "No se pudo abrir la página. Intenta de nuevo.");
 		}
 	}
 

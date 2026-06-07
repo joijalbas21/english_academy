@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.englishacademy.controllers.alumnos.AlumnoRegistroViewController"
+            style="-fx-background-color: #0f1419;">
+
+    <left>
+        <fx:include source="../shared/menu-sidebar.fxml" />
+    </left>
+
+    <center>
+        <VBox style="-fx-padding: 30;" spacing="20">
+            <Label fx:id="tituloLabel" style="-fx-font-size: 24; -fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+
+            <VBox style="-fx-background-color: #1a1f27; -fx-border-color: #00d4d4; -fx-border-width: 1; -fx-padding: 20;" spacing="15">
+                <GridPane hgap="15" vgap="15">
+                    <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+                    <TextField fx:id="nombreField" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-padding: 10; -fx-font-size: 12;" />
+
+                    <Label text="Apellido:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+                    <TextField fx:id="apellidoField" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-padding: 10; -fx-font-size: 12;" />
+
+                    <Label text="DNI:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+                    <TextField fx:id="dniField" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-padding: 10; -fx-font-size: 12;" />
+
+                    <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+                    <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-padding: 10; -fx-font-size: 12;" />
+
+                    <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-text-fill: #ffffff; -fx-font-weight: bold;" />
+                    <TextField fx:id="telefonoField" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-padding: 10; -fx-font-size: 12;" />
+                </GridPane>
+
+                <Label fx:id="errorLabel" style="-fx-text-fill: #ff6b6b; -fx-font-size: 12;" />
+
+                <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+                    <Button text="Guardar" onAction="#handleGuardar"
+                            style="-fx-padding: 10 30; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 12;" />
+                    <Button text="Cancelar" onAction="#handleCancelar"
+                            style="-fx-padding: 10 30; -fx-background-color: #666666; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 12;" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
