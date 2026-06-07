@@ -2,8 +2,9 @@ package com.englishacademy.models.services;
 
 public class LoginService {
 
+	// Implementación fuera del scope del proyecto y no considerado en los CU definidos.
+	// Se deja implementación mínima para simular autenticación de administrador.
 	public boolean autenticar(String email, String password) {
-		// Credenciales de prueba (TODO: Implementar autenticación real con BD)
-		return email.equals("test@test.com") && password.equals("test123");
+		return email.equals("admin@englishacademy.com.ar") && password.equals("admin123");
 	}
 }
