@@ -1,9 +1,9 @@
 package com.englishacademy.models;
 
 public class Aula {
-    public int idAula;
-    public String nombre;
-    public int capacidad;
+    private int idAula;
+    private String nombre;
+    private int capacidad;
 
     public Aula() {
     }
