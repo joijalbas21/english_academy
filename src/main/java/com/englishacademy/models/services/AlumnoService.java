@@ -1,27 +1,25 @@
 package com.englishacademy.models.services;
 
+import com.englishacademy.infra.DatabaseConnection;
 import com.englishacademy.models.Alumno;
 import com.englishacademy.utils.ValidacionesHelper;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Servicio de gestión de alumnos con persistencia en memoria.
- *
- * NOTA: Por ahora, los datos se almacenan en una lista en memoria y se pierden
- * al reiniciar la aplicación. En futuras iteraciones, se implementará persistencia
- * en base de datos MySQL mediante DAOs.
+ * Servicio de gestión de alumnos con persistencia en base de datos MySQL.
+ * Utiliza JDBC para acceder a la tabla "alumnos" en la base de datos.
  */
 public class AlumnoService {
 
     private static AlumnoService instancia;
-    private List<Alumno> alumnos;
-    private int nextId = 3;
 
     private AlumnoService() {
-        this.alumnos = new ArrayList<>();
-        inicializarConDatos();
     }
 
     /**
@@ -36,78 +34,142 @@ public class AlumnoService {
         return instancia;
     }
 
-    private void inicializarConDatos() {
-        alumnos.add(new Alumno(1, "Joaquin", "Ijalba", 35706793, "joaquinijalba@gmail.com", "3434045828"));
-        alumnos.add(new Alumno(2, "Martin", "Lopez", 30123456, "mlopez@academy.com", "1234567890"));
-    }
-
     /**
-     * Registra un nuevo alumno validando sus datos.
+     * Registra un nuevo alumno validando sus datos e insertándolo en la base de datos.
      *
      * @param alumno el alumno a registrar
      * @throws IllegalArgumentException si los datos no son válidos
+     * @throws RuntimeException si hay un error de base de datos
      */
     public void registrar(Alumno alumno) {
         validarAlumno(alumno);
-        alumno.setIdAlumno(nextId++);
-        alumnos.add(alumno);
-    }
-
-    /**
-     * Modifica un alumno existente validando sus datos.
-     *
-     * @param alumno el alumno con datos actualizados
-     * @throws IllegalArgumentException si los datos no son válidos o el alumno no existe
-     */
-    public void modificar(Alumno alumno) {
-        validarAlumno(alumno);
-        Optional<Alumno> existente = alumnos.stream()
-                .filter(a -> a.getIdAlumno() == alumno.getIdAlumno())
-                .findFirst();
-
-        if (existente.isPresent()) {
-            Alumno a = existente.get();
-            a.setNombre(alumno.getNombre());
-            a.setApellido(alumno.getApellido());
-            a.setDni(alumno.getDni());
-            a.setEmail(alumno.getEmail());
-            a.setTelefono(alumno.getTelefono());
-        } else {
-            throw new IllegalArgumentException("Alumno no encontrado");
+        String sql = "INSERT INTO alumnos (nombre, apellido, dni, email, telefono) VALUES (?, ?, ?, ?, ?)";
+        Connection conn = DatabaseConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, alumno.getNombre());
+            ps.setString(2, alumno.getApellido());
+            ps.setInt(3, alumno.getDni());
+            ps.setString(4, alumno.getEmail());
+            ps.setString(5, alumno.getTelefono());
+            ps.executeUpdate();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    alumno.setIdAlumno(rs.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al registrar alumno en la base de datos", e);
         }
     }
 
     /**
-     * Elimina un alumno de la lista por su ID.
+     * Modifica un alumno existente validando sus datos y actualizándolo en la base de datos.
      *
-     * @param idAlumno el ID del alumno a eliminar
+     * @param alumno el alumno con datos actualizados
+     * @throws IllegalArgumentException si los datos no son válidos o el alumno no existe
+     * @throws RuntimeException si hay un error de base de datos
      */
-    public void eliminar(int idAlumno) {
-        alumnos.removeIf(a -> a.getIdAlumno() == idAlumno);
+    public void modificar(Alumno alumno) {
+        validarAlumno(alumno);
+        String sql = "UPDATE alumnos SET nombre=?, apellido=?, dni=?, email=?, telefono=? WHERE id=?";
+        Connection conn = DatabaseConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, alumno.getNombre());
+            ps.setString(2, alumno.getApellido());
+            ps.setInt(3, alumno.getDni());
+            ps.setString(4, alumno.getEmail());
+            ps.setString(5, alumno.getTelefono());
+            ps.setInt(6, alumno.getIdAlumno());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 0) {
+                throw new IllegalArgumentException("Alumno no encontrado");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al modificar alumno en la base de datos", e);
+        }
     }
 
     /**
-     * Obtiene un alumno por su ID.
+     * Elimina un alumno de la base de datos por su ID.
+     *
+     * @param idAlumno el ID del alumno a eliminar
+     * @throws RuntimeException si hay un error de base de datos
+     */
+    public void eliminar(int idAlumno) {
+        String sql = "DELETE FROM alumnos WHERE id=?";
+        Connection conn = DatabaseConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idAlumno);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar alumno de la base de datos", e);
+        }
+    }
+
+    /**
+     * Obtiene un alumno por su ID desde la base de datos.
      *
      * @param idAlumno el ID del alumno
      * @return el alumno encontrado, o null si no existe
+     * @throws RuntimeException si hay un error de base de datos
      */
     public Alumno obtener(int idAlumno) {
-        return alumnos.stream()
-                .filter(a -> a.getIdAlumno() == idAlumno)
-                .findFirst()
-                .orElse(null);
+        String sql = "SELECT * FROM alumnos WHERE id=?";
+        Connection conn = DatabaseConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idAlumno);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapearAlumno(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener alumno de la base de datos", e);
+        }
+        return null;
     }
 
     /**
-     * Obtiene la lista de todos los alumnos registrados.
+     * Obtiene la lista de todos los alumnos registrados en la base de datos.
      *
-     * @return copia de la lista de alumnos
+     * @return lista de alumnos
+     * @throws RuntimeException si hay un error de base de datos
      */
     public List<Alumno> obtenerTodos() {
-        return new ArrayList<>(alumnos);
+        List<Alumno> alumnos = new ArrayList<>();
+        String sql = "SELECT * FROM alumnos";
+        Connection conn = DatabaseConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                alumnos.add(mapearAlumno(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener lista de alumnos de la base de datos", e);
+        }
+        return alumnos;
     }
 
+    /**
+     * Mapea una fila de ResultSet a un objeto Alumno.
+     */
+    private Alumno mapearAlumno(ResultSet rs) throws SQLException {
+        return new Alumno(
+                rs.getInt("id"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getInt("dni"),
+                rs.getString("email"),
+                rs.getString("telefono")
+        );
+    }
+
+    /**
+     * Valida los datos de un alumno según las reglas de negocio.
+     *
+     * @param alumno el alumno a validar
+     * @throws IllegalArgumentException si algún dato es inválido
+     */
     public void validarAlumno(Alumno alumno) {
         ValidacionesHelper.validarNombrePersona(alumno.getNombre(), "El nombre");
         ValidacionesHelper.validarNombrePersona(alumno.getApellido(), "El apellido");
