@@ -80,9 +80,13 @@ public class ProfesorViewController {
             boolean confirmado = AlertUtil.showConfirmation("Confirmar eliminación",
                     "¿Estás seguro de que deseas eliminar a " + profesor.getNombre() + "?");
             if (confirmado) {
-                profesorService.eliminar(profesor.getIdProfesor());
-                AlertUtil.showInfo("Éxito", "Profesor eliminado correctamente.");
-                cargarTabla();
+                try {
+                    profesorService.eliminar(profesor.getIdProfesor());
+                    AlertUtil.showInfo("Éxito", "Profesor eliminado correctamente.");
+                    cargarTabla();
+                } catch (Exception e) {
+                    AlertUtil.showError("Error", "Error al eliminar profesor: " + e.getMessage());
+                }
             }
         }
     }
