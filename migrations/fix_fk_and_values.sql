@@ -1,0 +1,3 @@
+ALTER TABLE cursos MODIFY diaSemana VARCHAR(20);
+ALTER TABLE cursos MODIFY id_profesor INT NULL;
+ALTER TABLE cursos MODIFY id_aula INT NULL;
