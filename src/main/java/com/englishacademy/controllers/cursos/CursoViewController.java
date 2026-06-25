@@ -80,9 +80,13 @@ public class CursoViewController {
             boolean confirmado = AlertUtil.showConfirmation("Confirmar eliminación",
                     "¿Estás seguro de que deseas eliminar el curso " + curso.getNombre() + "?");
             if (confirmado) {
-                cursoService.eliminar(curso.getIdCurso());
-                AlertUtil.showInfo("Éxito", "Curso eliminado correctamente.");
-                cargarTabla();
+                try {
+                    cursoService.eliminar(curso.getIdCurso());
+                    AlertUtil.showInfo("Éxito", "Curso eliminado correctamente.");
+                    cargarTabla();
+                } catch (Exception e) {
+                    AlertUtil.showError("Error", "Error al eliminar curso: " + e.getMessage());
+                }
             }
         }
     }
