@@ -80,9 +80,13 @@ public class AlumnoViewController {
             boolean confirmado = AlertUtil.showConfirmation("Confirmar eliminación",
                     "¿Estás seguro de que deseas eliminar a " + alumno.getNombre() + "?");
             if (confirmado) {
-                alumnoService.eliminar(alumno.getIdAlumno());
-                AlertUtil.showInfo("Éxito", "Alumno eliminado correctamente.");
-                cargarTabla();
+                try {
+                    alumnoService.eliminar(alumno.getIdAlumno());
+                    AlertUtil.showInfo("Éxito", "Alumno eliminado correctamente.");
+                    cargarTabla();
+                } catch (Exception e) {
+                    AlertUtil.showError("Error", "Error al eliminar alumno: " + e.getMessage());
+                }
             }
         }
     }
