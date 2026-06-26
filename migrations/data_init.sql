@@ -81,7 +81,7 @@ VALUES (
     'English B1',
     'Intermedio',
     'Curso nivel intermedio',
-    'LUN',
+    'Lunes',
     '18:00:00',
     '20:00:00'
 );
