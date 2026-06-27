@@ -22,9 +22,9 @@
     <Region minHeight="40" style="-fx-background-color: transparent;" />
 
     <!-- Menu Items -->
-    <Button text="Dashboard" userData="dashboard" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand;"
+    <Button text="Dashboard" userData="dashboard" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
             onAction="#handle" />
-    <Button text="Alumnos" userData="alumnos" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 1 0 1 0; -fx-cursor: hand;"
+    <Button text="Alumnos" userData="alumnos" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
             onAction="#handle" />
     <Button text="Cursos" userData="cursos" maxWidth="Infinity" style="-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;"
             onAction="#handle" />

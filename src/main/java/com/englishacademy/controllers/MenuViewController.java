@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import com.englishacademy.utils.ContextoApp;
 import com.englishacademy.utils.SceneUtil;
 
 public class MenuViewController {
@@ -11,39 +12,33 @@ public class MenuViewController {
 	@FXML
 	private VBox root;
 
-	/**
-	 * Configura listeners de hover para todos los botones del menú.
-	 */
+	private static final String ESTILO_ACTIVO =
+		"-fx-padding: 12 20; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-width: 0 0 1 0;";
+	private static final String ESTILO_INACTIVO =
+		"-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-border-width: 0 0 1 0; -fx-cursor: hand;";
+
 	@FXML
 	public void initialize() {
 		if (root != null) {
 			root.getChildren().stream()
 				.filter(node -> node instanceof Button)
 				.map(node -> (Button) node)
-				.forEach(this::configureButtonHover);
+				.forEach(btn -> {
+					aplicarEstilo(btn, btn.getUserData().equals(ContextoApp.getPaginaActual()));
+					configurarHover(btn);
+				});
 		}
 	}
 
-	/**
-	 * Cambia el color del botón al pasar el mouse y lo restaura al salir.
-	 *
-	 * @param btn el botón a configurar
-	 */
-	private void configureButtonHover(Button btn) {
-		btn.setOnMouseEntered(e -> btn.setStyle(btn.getStyle() + "; -fx-background-color: #2a4a4a;"));
-		btn.setOnMouseExited(e -> {
-			String original = btn.getUserData().equals("dashboard")
-				? "-fx-padding: 12 20; -fx-background-color: #00d4d4; -fx-text-fill: #0f1419; -fx-font-weight: bold; -fx-cursor: hand;"
-				: "-fx-padding: 12 20; -fx-background-color: transparent; -fx-text-fill: #999999; -fx-border-color: #333333; -fx-cursor: hand;";
-			btn.setStyle(original + " -fx-border-width: 0 0 1 0;");
-		});
+	private void aplicarEstilo(Button btn, boolean activo) {
+		btn.setStyle(activo ? ESTILO_ACTIVO : ESTILO_INACTIVO);
 	}
 
-	/**
-	 * Obtiene el nombre de la página del botón y navega a ella.
-	 *
-	 * @param event el evento del click
-	 */
+	private void configurarHover(Button btn) {
+		btn.setOnMouseEntered(e -> btn.setStyle(btn.getStyle() + "; -fx-background-color: #2a4a4a;"));
+		btn.setOnMouseExited(e -> aplicarEstilo(btn, btn.getUserData().equals(ContextoApp.getPaginaActual())));
+	}
+
 	@FXML
 	private void handle(ActionEvent event) {
 		Button btn = (Button) event.getSource();
@@ -51,12 +46,6 @@ public class MenuViewController {
 		navigateTo(pageName, btn);
 	}
 
-	/**
-	 * Carga la vista FXML correspondiente y cambia la escena actual.
-	 *
-	 * @param pageName el nombre de la página a cargar
-	 * @param btn el botón que disparó la navegación
-	 */
 	private void navigateTo(String pageName, Button btn) {
 		String fxmlFile = switch(pageName) {
 			case "dashboard" -> "/com/englishacademy/views/dashboard-view.fxml";
@@ -68,6 +57,7 @@ public class MenuViewController {
 		};
 
 		if (fxmlFile != null) {
+			ContextoApp.setPaginaActual(pageName);
 			SceneUtil.cambiarEscena(fxmlFile, btn);
 		}
 	}
