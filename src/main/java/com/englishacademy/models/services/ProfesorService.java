@@ -94,9 +94,15 @@ public class ProfesorService {
      * @throws RuntimeException si hay un error de base de datos
      */
     public void eliminar(int idProfesor) {
-        String sql = "DELETE FROM profesores WHERE id=?";
         Connection conn = DatabaseConnection.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement psCursos = conn.prepareStatement("UPDATE cursos SET id_profesor=NULL WHERE id_profesor=?")) {
+            psCursos.setInt(1, idProfesor);
+            psCursos.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al desasignar profesor de los cursos", e);
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM profesores WHERE id=?")) {
             ps.setInt(1, idProfesor);
             ps.executeUpdate();
         } catch (SQLException e) {

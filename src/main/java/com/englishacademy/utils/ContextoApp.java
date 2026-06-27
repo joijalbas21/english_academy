@@ -12,6 +12,15 @@ public class ContextoApp {
     private static Integer idAlumnoEnEdicion;
     private static Integer idProfesorEnEdicion;
     private static Integer idCursoEnEdicion;
+    private static String paginaActual = "dashboard";
+
+    public static String getPaginaActual() {
+        return paginaActual;
+    }
+
+    public static void setPaginaActual(String pagina) {
+        paginaActual = pagina;
+    }
 
     public static Integer getIdAlumnoEnEdicion() {
         return idAlumnoEnEdicion;

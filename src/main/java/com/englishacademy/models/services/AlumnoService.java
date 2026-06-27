@@ -96,9 +96,15 @@ public class AlumnoService {
      * @throws RuntimeException si hay un error de base de datos
      */
     public void eliminar(int idAlumno) {
-        String sql = "DELETE FROM alumnos WHERE id=?";
         Connection conn = DatabaseConnection.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement psMatriculas = conn.prepareStatement("DELETE FROM matriculas WHERE id_alumno=?")) {
+            psMatriculas.setInt(1, idAlumno);
+            psMatriculas.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar matriculaciones del alumno", e);
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM alumnos WHERE id=?")) {
             ps.setInt(1, idAlumno);
             ps.executeUpdate();
         } catch (SQLException e) {
