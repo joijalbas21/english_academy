@@ -21,21 +21,21 @@
 
             <HBox spacing="20">
                 <VBox style="-fx-background-color: #1a1f27; -fx-border-color: #00d4d4; -fx-border-width: 2 0 0 0; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                    <Label text="42" style="-fx-font-size: 32; -fx-text-fill: #00d4d4; -fx-font-weight: bold;" />
+                    <Label fx:id="labelCursos" text="0" style="-fx-font-size: 32; -fx-text-fill: #00d4d4; -fx-font-weight: bold;" />
                     <Label text="CANTIDAD DE CURSOS" style="-fx-font-size: 12; -fx-text-fill: #888888;" />
-                    <Label text="Cursos activos" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
+                    <Label text="Cursos registrados" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
                 </VBox>
 
                 <VBox style="-fx-background-color: #1a1f27; -fx-border-color: #00a8ff; -fx-border-width: 2 0 0 0; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                    <Label text="126" style="-fx-font-size: 32; -fx-text-fill: #00a8ff; -fx-font-weight: bold;" />
-                    <Label text="ALUMNOS INSCRITOS" style="-fx-font-size: 12; -fx-text-fill: #888888;" />
-                    <Label text="Alumnos activos" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
+                    <Label fx:id="labelAlumnos" text="0" style="-fx-font-size: 32; -fx-text-fill: #00a8ff; -fx-font-weight: bold;" />
+                    <Label text="CANTIDAD DE ALUMNOS" style="-fx-font-size: 12; -fx-text-fill: #888888;" />
+                    <Label text="Alumnos registrados" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
                 </VBox>
 
                 <VBox style="-fx-background-color: #1a1f27; -fx-border-color: #ff6b6b; -fx-border-width: 2 0 0 0; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                    <Label text="0" style="-fx-font-size: 32; -fx-text-fill: #ff6b6b; -fx-font-weight: bold;" />
-                    <Label text="PAGOS PENDIENTES" style="-fx-font-size: 12; -fx-text-fill: #888888;" />
-                    <Label text="Pagos por procesar" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
+                    <Label fx:id="labelProfesores" text="0" style="-fx-font-size: 32; -fx-text-fill: #ff6b6b; -fx-font-weight: bold;" />
+                    <Label text="CANTIDAD DE PROFESORES" style="-fx-font-size: 12; -fx-text-fill: #888888;" />
+                    <Label text="Profesores registrados" style="-fx-font-size: 10; -fx-text-fill: #666666;" />
                 </VBox>
             </HBox>
         </VBox>
